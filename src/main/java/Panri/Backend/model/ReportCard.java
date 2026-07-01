@@ -1,0 +1,42 @@
+package Panri.Backend.model;
+
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "report_card")
+@Getter
+@Setter
+@NoArgsConstructor
+public class ReportCard {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "report_cart_id")
+    private Long reportCardId;
+
+    //FK del estudiante
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id")
+    private Student student;
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "term_id")
+    private AcademicTerm term;
+
+    @OneToMany(mappedBy = "reportCard", cascade = CascadeType.ALL)
+    private List<ReportCardDetail> reportCardDetails = new ArrayList<>();
+
+
+
+
+
+
+}
