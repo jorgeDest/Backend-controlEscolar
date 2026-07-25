@@ -2,9 +2,7 @@ package Panri.Backend.model;
 
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +10,11 @@ import java.util.List;
 //anotaciones
 @Entity
 @Table(name = "student")
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Getter
 @Setter
-@NoArgsConstructor
 public class Student {
     //atributos correspondientes al modelo
     @Id
@@ -28,7 +28,7 @@ public class Student {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    //Matricula del estudiante
+    //Matrícula del estudiante
     @Column(name = "enrollment_code")
     private String enrollmentCode;
 

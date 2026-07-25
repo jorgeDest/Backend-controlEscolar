@@ -1,15 +1,14 @@
 package Panri.Backend.model;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
-@Table(name = "user")
-@Getter
-@Setter
+@Table(name = "users")
 @NoArgsConstructor
+@AllArgsConstructor
+@Builder
+@Data
 public class User {
 
     @Id
