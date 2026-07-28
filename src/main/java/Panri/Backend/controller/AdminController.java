@@ -2,6 +2,7 @@ package Panri.Backend.controller;
 
 import Panri.Backend.DTOs.RegisterStudentDTO;
 import Panri.Backend.DTOs.RegisterTeacherDTO;
+import Panri.Backend.DTOs.StudentResponseDTO;
 import Panri.Backend.model.Student;
 import Panri.Backend.model.Teacher;
 import Panri.Backend.model.User;
@@ -35,8 +36,21 @@ public class AdminController {
 
     @PostMapping("/registerStudent")
     @ResponseStatus(HttpStatus.CREATED)
-    public Student registerStudent(@RequestBody @Valid RegisterStudentDTO registerStudentDTO){
-        return registerService.registerStudent(registerStudentDTO);
+    public StudentResponseDTO registerStudent(@RequestBody @Valid RegisterStudentDTO registerStudentDTO){
+
+        Student student = registerService.registerStudent(registerStudentDTO);
+
+        StudentResponseDTO responseDTO = new StudentResponseDTO();
+        responseDTO.setFirstName(student.getFirstName());
+        responseDTO.setLastName(student.getLastName());
+        responseDTO.setEnrollmentCode(student.getEnrollmentCode());
+
+        if(student.getStudentGroup() != null){
+            responseDTO.setGrade(student.getStudentGroup().getGradeLevel());
+            responseDTO.setGroupName(student.getStudentGroup().getName());
+        }
+        return responseDTO;
+
     }
 
     @PostMapping("/registerTeacher")

@@ -27,7 +27,7 @@ public class Teacher {
     @Column(name = "last_Name")
     private String lastName;
 
-    @Column(name = "employee_Number")
+    @Column(name = "employee_Number", unique = true)
     private String employeeNumber;
 
     //FK User

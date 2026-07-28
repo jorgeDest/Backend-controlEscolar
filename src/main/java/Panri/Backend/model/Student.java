@@ -29,7 +29,7 @@ public class Student {
     private String lastName;
 
     //Matrícula del estudiante
-    @Column(name = "enrollment_code")
+    @Column(name = "enrollment_code", unique = true)
     private String enrollmentCode;
 
     //FK Usuario
@@ -42,11 +42,7 @@ public class Student {
     @JoinColumn(name = "group_id")
     private StudentGroup studentGroup;
 
-
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     private List<ReportCard> reportCards = new ArrayList<>();
-
-
-
 
 }

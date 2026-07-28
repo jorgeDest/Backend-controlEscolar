@@ -1,7 +1,7 @@
 package Panri.Backend.DTOs;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 
@@ -19,5 +19,9 @@ public class RegisterStudentDTO {
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, max = 12, message = "la contraseña debe tener entre 8 y 12 caracteres")
     private String password;
+    @NotNull(message = "Necesita ingresar el grado del estudiante")
+    private Integer grade;
+    @NotBlank(message = "Necesita ingresar el grupo del estudiante")
+    private String groupName;
 
 }

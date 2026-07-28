@@ -3,14 +3,8 @@ package Panri.Backend.service;
 import Panri.Backend.DTOs.RegisterStudentDTO;
 import Panri.Backend.DTOs.RegisterTeacherDTO;
 import Panri.Backend.configurations.RoleType;
-import Panri.Backend.model.Role;
-import Panri.Backend.model.Student;
-import Panri.Backend.model.Teacher;
-import Panri.Backend.model.User;
-import Panri.Backend.repository.RoleRepository;
-import Panri.Backend.repository.StudentRepository;
-import Panri.Backend.repository.TeacherRepository;
-import Panri.Backend.repository.UserRepository;
+import Panri.Backend.model.*;
+import Panri.Backend.repository.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,6 +22,9 @@ public class RegisterService {
     @Autowired private PasswordEncoder passwordEncoder;
 
     @Autowired private RoleRepository roleRepository;
+
+    @Autowired private StudentGroupRepository groupRepository;
+
 
 
     @Transactional
@@ -48,7 +45,13 @@ public class RegisterService {
 
         //Preguntar si existe el rol dentro del Enum RolType
         Role studentRole = roleRepository.findByName(RoleType.STUDENT)
-                .orElseThrow(() -> new RuntimeException("Error: el rol STUDENT no existe"));
+                .orElseThrow(() -> new RuntimeException("Error: El rol STUDENT no existe"));
+        //debería preguntar si existe él grade y group
+        StudentGroup group = groupRepository.findByGradeLevelAndName(registerStudentDTO.getGrade(), registerStudentDTO.getGroupName())
+                .orElseThrow(() -> new RuntimeException("Error: Ingresa un grado correcto para el estudiante"));
+        if(studentRepository.existsByEnrollmentCode(registerStudentDTO.getEnrollmentCode())){
+            throw new IllegalArgumentException("Error: La matrícula " + registerStudentDTO.getEnrollmentCode() + " ya está registrada en el sistema.");
+        }
 
         User newUser = new User();
         //asignamos el username mediante los datos de EnrollmentCode recibimos del JSON
@@ -65,6 +68,8 @@ public class RegisterService {
         newStudent.setLastName(registerStudentDTO.getLastName());
         newStudent.setEnrollmentCode(registerStudentDTO.getEnrollmentCode());
 
+        newStudent.setStudentGroup(group);
+
         // Asignar User al estudiante
         newStudent.setUser(savedUser);
         // Guardar el estudiante
@@ -76,6 +81,10 @@ public class RegisterService {
 
         Role teacherRol = roleRepository.findByName(RoleType.TEACHER)
                 .orElseThrow(() -> new RuntimeException("Error: el rol TEACHER no existe"));
+
+        if(teacherRepository.existsByEmployeeNumber(teacherDTO.getEmployeeNumber())){
+            throw new IllegalArgumentException("Error: La matrícula " + teacherDTO.getEmployeeNumber() + " ya está registrada en el sistema.");
+        }
 
         User newUser = new User();
 
