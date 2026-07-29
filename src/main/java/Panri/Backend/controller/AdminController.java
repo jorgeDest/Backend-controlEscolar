@@ -39,8 +39,8 @@ public class AdminController {
     public StudentResponseDTO registerStudent(@RequestBody @Valid RegisterStudentDTO registerStudentDTO){
 
         Student student = registerService.registerStudent(registerStudentDTO);
-
         StudentResponseDTO responseDTO = new StudentResponseDTO();
+
         responseDTO.setFirstName(student.getFirstName());
         responseDTO.setLastName(student.getLastName());
         responseDTO.setEnrollmentCode(student.getEnrollmentCode());

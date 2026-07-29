@@ -1,5 +1,6 @@
 package Panri.Backend.service;
 
+import Panri.Backend.DTOs.LoginUserDto;
 import Panri.Backend.model.User;
 import Panri.Backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +17,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class LoginService {
 
-    @Autowired
-    UserRepository userRepository;
+    @Autowired UserRepository userRepository;
+
 
     BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-    public User authenticate(String username, String password){
-        User user = userRepository.findByUsername(username)
+    public User authenticate(LoginUserDto loginUserDto){
+        User user = userRepository.findByUsername(loginUserDto.getUsername())
                 .orElseThrow(() -> new RuntimeException("El usuario no fue encontrado"));
-        if(passwordEncoder.matches(password, user.getPassword())){
+        if(passwordEncoder.matches(loginUserDto.getPassword(), user.getPassword())){
             return user;
         }
         throw new RuntimeException("Contraseña Incorrecta");

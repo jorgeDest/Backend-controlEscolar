@@ -1,4 +1,4 @@
-package Panri.Backend.Exceptions;
+package Panri.Backend.exceptions;
 
 
 import org.springframework.http.HttpStatus;
