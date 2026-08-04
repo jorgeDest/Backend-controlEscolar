@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class ReportCard {
+public class ReportCardEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,19 +24,15 @@ public class ReportCard {
     //FK del estudiante
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
-    private Student student;
+    private StudentEntity student;
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "term_id")
-    private AcademicTerm term;
+    private AcademicTermEntity term;
 
     @OneToMany(mappedBy = "reportCard", cascade = CascadeType.ALL)
-    private List<ReportCardDetail> reportCardDetails = new ArrayList<>();
-
-
-
-
+    private List<ReportCardDetailEntity> reportCardDetails = new ArrayList<>();
 
 
 }

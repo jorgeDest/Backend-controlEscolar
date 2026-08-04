@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-public class ReportCardDetail {
+public class ReportCardDetailEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long reportCardDetail;
@@ -22,14 +22,14 @@ public class ReportCardDetail {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report_card_id")
-    private ReportCard reportCard;
+    private ReportCardEntity reportCard;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
-    private Subject subject;
+    private SubjectEntity subject;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
-    private Teacher teacher;
+    private TeacherEntity teacher;
 
 }

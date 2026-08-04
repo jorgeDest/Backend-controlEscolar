@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class Role {
+public class RoleEntity {
     @Id
     @Column(name = "rol_Id")
     @GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -27,6 +27,6 @@ public class Role {
 
     @JsonIgnore
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
-    private List<User> users = new ArrayList<>();
+    private List<UserEntity> users = new ArrayList<>();
 
 }

@@ -7,13 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "subject")
+@Table(name = "subjectEntity")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Setter
-public class Subject {
+public class SubjectEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class Subject {
     @Column(name = "subject_code")
     private String subjectCode;
 
-    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
-    private List<ReportCardDetail> reportCardDetails = new ArrayList<>();
+    @OneToMany(mappedBy = "subjectEntity", cascade = CascadeType.ALL)
+    private List<ReportCardDetailEntity> reportCardDetails = new ArrayList<>();
 
 }

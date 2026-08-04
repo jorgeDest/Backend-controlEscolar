@@ -1,11 +1,8 @@
-package Panri.Backend.DTOs;
+package Panri.Backend.DTOs.jwt;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
-@Data
-public class LoginUserDto {
-
+public class AuthenticationRequest {
     @NotBlank(message = "Debe de ingresar un usuario")
     private String username;
     @NotBlank(message = "Debe de ingresar una contraseña")

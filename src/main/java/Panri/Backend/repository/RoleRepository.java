@@ -1,13 +1,13 @@
 package Panri.Backend.repository;
 
 import Panri.Backend.configurations.RoleType;
-import Panri.Backend.model.Role;
+import Panri.Backend.model.RoleEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
+public interface RoleRepository extends JpaRepository<RoleEntity, Long> {
 
-    Optional<Role>findByName(RoleType name);
+    Optional<RoleEntity>findByName(RoleType name);
 }

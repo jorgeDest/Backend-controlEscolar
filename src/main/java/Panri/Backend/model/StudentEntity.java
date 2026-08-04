@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class Student {
+public class StudentEntity {
     //atributos correspondientes al modelo
     @Id
     @Column(name = "student_Id")
@@ -35,14 +35,14 @@ public class Student {
     //FK Usuario
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id" , unique = true)
-    private User user;
+    private UserEntity user;
 
     //FK Grupo
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "group_id")
-    private StudentGroup studentGroup;
+    private StudentGroupEntity studentGroup;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    private List<ReportCard> reportCards = new ArrayList<>();
+    private List<ReportCardEntity> reportCards = new ArrayList<>();
 
 }

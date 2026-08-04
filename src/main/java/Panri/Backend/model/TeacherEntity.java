@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class Teacher {
+public class TeacherEntity {
 
     @Id
     @Column(name = "teacher_Id")
@@ -33,9 +33,9 @@ public class Teacher {
     //FK User
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_Id" , unique = true)
-    private User user;
+    private UserEntity user;
 
     @OneToMany(mappedBy = "teacher", cascade = CascadeType.ALL)
-    private List<ReportCardDetail> reportCardDetails = new ArrayList<>();
+    private List<ReportCardDetailEntity> reportCardDetails = new ArrayList<>();
 
 }

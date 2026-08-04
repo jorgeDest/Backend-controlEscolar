@@ -28,7 +28,7 @@ public class RegisterService {
 
 
     @Transactional
-    public User registerUser(User user){
+    public UserEntity registerUser(UserEntity user){
         if(userRepository.findByUsername(user.getUsername()).isPresent()){
             throw new RuntimeException("El usuario ya esta registrado");
         }
@@ -39,21 +39,21 @@ public class RegisterService {
 
     }
 
-    // Recibimos 2 parámetros 1 el objeto de Student y un String para Guardar la contraseña
+    // Recibimos 2 parámetros 1 el objeto de StudentEntity y un String para Guardar la contraseña
     @Transactional
-    public Student registerStudent(RegisterStudentDTO registerStudentDTO){
+    public StudentEntity registerStudent(RegisterStudentDTO registerStudentDTO){
 
         //Preguntar si existe el rol dentro del Enum RolType
-        Role studentRole = roleRepository.findByName(RoleType.STUDENT)
+        RoleEntity studentRole = roleRepository.findByName(RoleType.STUDENT)
                 .orElseThrow(() -> new RuntimeException("Error: El rol STUDENT no existe"));
         //debería preguntar si existe él grade y group
-        StudentGroup group = groupRepository.findByGradeLevelAndName(registerStudentDTO.getGrade(), registerStudentDTO.getGroupName())
+        StudentGroupEntity group = groupRepository.findByGradeLevelAndName(registerStudentDTO.getGrade(), registerStudentDTO.getGroupName())
                 .orElseThrow(() -> new RuntimeException("Error: Ingresa un grado correcto para el estudiante"));
         if(studentRepository.existsByEnrollmentCode(registerStudentDTO.getEnrollmentCode())){
             throw new IllegalArgumentException("Error: La matrícula " + registerStudentDTO.getEnrollmentCode() + " ya está registrada en el sistema.");
         }
 
-        User newUser = new User();
+        UserEntity newUser = new UserEntity();
         //asignamos el username mediante los datos de EnrollmentCode recibimos del JSON
         newUser.setUsername(registerStudentDTO.getEnrollmentCode());
         //hash a la contraseña para que no se guarde en texto plano
@@ -61,9 +61,9 @@ public class RegisterService {
         // Asignación de Rol
         newUser.setRole(studentRole);
         // Guardar el User
-        User savedUser = userRepository.save(newUser);
+        UserEntity savedUser = userRepository.save(newUser);
 
-        Student newStudent = new Student();
+        StudentEntity newStudent = new StudentEntity();
         newStudent.setFirstName(registerStudentDTO.getFirstName());
         newStudent.setLastName(registerStudentDTO.getLastName());
         newStudent.setEnrollmentCode(registerStudentDTO.getEnrollmentCode());
@@ -77,23 +77,23 @@ public class RegisterService {
     }
 
     @Transactional
-    public Teacher registerTeacher(RegisterTeacherDTO teacherDTO){
+    public TeacherEntity registerTeacher(RegisterTeacherDTO teacherDTO){
 
-        Role teacherRol = roleRepository.findByName(RoleType.TEACHER)
+        RoleEntity teacherRol = roleRepository.findByName(RoleType.TEACHER)
                 .orElseThrow(() -> new RuntimeException("Error: el rol TEACHER no existe"));
 
         if(teacherRepository.existsByEmployeeNumber(teacherDTO.getEmployeeNumber())){
             throw new IllegalArgumentException("Error: La matrícula " + teacherDTO.getEmployeeNumber() + " ya está registrada en el sistema.");
         }
 
-        User newUser = new User();
+        UserEntity newUser = new UserEntity();
 
         newUser.setUsername(teacherDTO.getEmployeeNumber());
         newUser.setPassword(passwordEncoder.encode(teacherDTO.getPassword()));
         newUser.setRole(teacherRol);
-        User savedUser = userRepository.save(newUser);
+        UserEntity savedUser = userRepository.save(newUser);
 
-        Teacher newTeacher = new Teacher();
+        TeacherEntity newTeacher = new TeacherEntity();
 
         newTeacher.setFirstName(teacherDTO.getFirstName());
         newTeacher.setLastName(teacherDTO.getLastName());

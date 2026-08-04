@@ -1,7 +1,10 @@
 package Panri.Backend.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
@@ -9,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 @Data
-public class User {
+public class UserEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,14 +28,14 @@ public class User {
     //FK rol
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "rol_id")
-    private Role role;
+    private RoleEntity role;
 
-    // mappedBy indica que la entidad Student es la dueña de la relación.
-    //por lo cual el valor "user" debe coincidir exactamente con el nombre de la clase Student.
+    // mappedBy indica que la entidad StudentEntity es la dueña de la relación.
+    //por lo cual el valor "user" debe coincidir exactamente con el nombre de la clase StudentEntity.
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Student student;
+    private StudentEntity student;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Teacher teacher;
+    private TeacherEntity teacher;
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class StudentGroup {
+public class StudentGroupEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "student_group_id")
@@ -27,6 +27,6 @@ public class StudentGroup {
     private Integer gradeLevel;
 
     @OneToMany(mappedBy = "studentGroup", cascade = CascadeType.ALL)
-    private List<Student> students = new ArrayList<>();
+    private List<StudentEntity> students = new ArrayList<>();
 
 }

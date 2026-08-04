@@ -14,7 +14,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
-public class AcademicTerm {
+public class AcademicTermEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,6 +24,6 @@ public class AcademicTerm {
     @Column(name = "term_date")
     private LocalDate termDate;
 
-    @OneToMany(mappedBy = "term",cascade = CascadeType.ALL)
-    private List<ReportCard> reportCard = new ArrayList<>();
+    @OneToMany(mappedBy = "term", cascade = CascadeType.ALL)
+    private List<ReportCardEntity> reportCard = new ArrayList<>();
 }
