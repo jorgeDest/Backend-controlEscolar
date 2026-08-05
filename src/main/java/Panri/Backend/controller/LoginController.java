@@ -1,29 +1,48 @@
 package Panri.Backend.controller;
 
-import Panri.Backend.DTOs.LoginUserDto;
 import Panri.Backend.DTOs.LoginUserResponseDto;
 import Panri.Backend.DTOs.jwt.AuthenticationRequest;
 import Panri.Backend.DTOs.jwt.AuthenticationResponse;
-import Panri.Backend.model.UserEntity;
-import Panri.Backend.service.LoginService;
+import Panri.Backend.service.jwt.JwtService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.*;
 
 
 @RestController
-@RequestMapping("/Login")
+@RequestMapping("/Auth")
 public class LoginController {
 
     @Autowired
-    private LoginService loginService;
+    private AuthenticationManager authenticationManager;
 
-    @PostMapping("Users")
-    public AuthenticationResponse loginUsers(@RequestBody @Valid AuthenticationRequest authenticationRequest){
+    @Autowired private UserDetailsService userDetailsService;
 
-        AuthenticationResponse response = new AuthenticationResponse();
+    @Autowired
+    private JwtService jwtService;
 
-        return new AuthenticationResponse();
+
+    @PostMapping("login")
+    public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
+        try{
+            authenticationManager.authenticate(
+              new UsernamePasswordAuthenticationToken(authenticationRequest.getUsername(), authenticationRequest.getPassword())
+            );
+        }
+        catch (Exception e){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
+        final String jwtToken = jwtService.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthenticationResponse(jwtToken));
 
     }
 

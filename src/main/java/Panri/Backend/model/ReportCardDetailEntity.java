@@ -26,7 +26,7 @@ public class ReportCardDetailEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id")
-    private SubjectEntity subject;
+    private SubjectEntity subjectEntity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "teacher_id")
