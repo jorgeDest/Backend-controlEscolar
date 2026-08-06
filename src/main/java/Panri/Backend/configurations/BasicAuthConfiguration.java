@@ -36,6 +36,7 @@ public class BasicAuthConfiguration {
                 .authorizeHttpRequests(authz -> authz
                         .requestMatchers("/api/public").permitAll()
                         .requestMatchers("/Auth/login").permitAll()
+                        .requestMatchers("/admin/registerStudent").permitAll()
 
                 )
                 .httpBasic(Customizer.withDefaults())

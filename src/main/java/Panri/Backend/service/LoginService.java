@@ -8,9 +8,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 /**
- * Método que recibe como parametro 2 campos, username y password después inyectamos la dependencia de UseRepository.
- * Para encriptar la password se necesita importar la biblioteca BCryptPasswordEncoder, declaramos el objeto BCryptPasswordEncoder
- * después lo inicializamos
+ * Método que recibe como parametro 2 campos, username y password después inyectamos la dependencia de UseRepository del cual usamos
+ * el metodo de findByUsername. Para encriptar la password se necesita importar la biblioteca BCryptPasswordEncoder, declaramos el objeto BCryptPasswordEncoder
+ * después lo inicializamos.
  *
  */
 
