@@ -15,9 +15,6 @@ public class RegisterStudentDTO {
     private String firstName;
     @NotBlank(message = "El apellido es obligatorio")
     private String lastName;
-    @NotBlank(message = "La contraseña es obligatoria")
-    @Size(min = 8, max = 12, message = "la contraseña debe tener entre 8 y 12 caracteres")
-    private String password;
     @NotNull(message = "Necesita ingresar el grado del estudiante")
     private String grade;
     @NotBlank(message = "Necesita ingresar el grupo del estudiante")

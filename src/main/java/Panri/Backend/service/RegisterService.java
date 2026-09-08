@@ -58,7 +58,7 @@ public class RegisterService {
                 registerStudentDTO.getGroupName()
         );
 
-        String temporaryPassword = "123124";
+        String temporaryPassword = "cambiatucontraseña";
 
         UserEntity newUser = new UserEntity();
         //asignamos el username mediante los datos de EnrollmentCode recibimos del JSON

@@ -14,7 +14,7 @@ public class StudentResponseDTO {
 
     private String enrollmentCode;
 
-    private Integer grade;
+    private String grade;
 
     private String groupName;
 }

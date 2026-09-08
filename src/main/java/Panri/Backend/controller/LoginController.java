@@ -27,7 +27,7 @@ public class LoginController {
     private JwtService jwtService;
 
 
-    @PostMapping("login")
+    @PostMapping("/login")
     public ResponseEntity<AuthenticationResponse> login(@Valid @RequestBody AuthenticationRequest authenticationRequest) {
         try{
             authenticationManager.authenticate(
