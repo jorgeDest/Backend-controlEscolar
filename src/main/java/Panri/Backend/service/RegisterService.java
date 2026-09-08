@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class RegisterService {
 
@@ -42,37 +44,39 @@ public class RegisterService {
     // Recibimos 2 parámetros 1 el objeto de StudentEntity y un String para Guardar la contraseña
     @Transactional
     public StudentEntity registerStudent(RegisterStudentDTO registerStudentDTO){
-
-        //Preguntar si existe el rol dentro del Enum RolType
+        //¿Busca dentro del repo si existe un rol con esa característica?
         RoleEntity studentRole = roleRepository.findByName(RoleType.STUDENT)
                 .orElseThrow(() -> new RuntimeException("Error: El rol STUDENT no existe"));
-        //debería preguntar si existe él grade y group
+        //preguntar si existe el grado y grupo
         StudentGroupEntity group = groupRepository.findByGradeLevelAndName(registerStudentDTO.getGrade(), registerStudentDTO.getGroupName())
                 .orElseThrow(() -> new RuntimeException("Error: Ingresa un grado correcto para el estudiante"));
-        if(studentRepository.existsByEnrollmentCode(registerStudentDTO.getEnrollmentCode())){
-            throw new IllegalArgumentException("Error: La matrícula " + registerStudentDTO.getEnrollmentCode() + " ya está registrada en el sistema.");
-        }
+
+        String generateCode = generateUsername(
+                registerStudentDTO.getFirstName(),
+                registerStudentDTO.getLastName(),
+                registerStudentDTO.getGrade(),
+                registerStudentDTO.getGroupName()
+        );
+
+        String temporaryPassword = "123124";
 
         UserEntity newUser = new UserEntity();
         //asignamos el username mediante los datos de EnrollmentCode recibimos del JSON
-        newUser.setUsername(registerStudentDTO.getEnrollmentCode());
+        newUser.setUsername(generateCode);
         //hash a la contraseña para que no se guarde en texto plano
-        newUser.setPassword(passwordEncoder.encode(registerStudentDTO.getPassword()));
+        newUser.setPassword(passwordEncoder.encode(temporaryPassword));
         // Asignación de Rol
         newUser.setRole(studentRole);
-        // Guardar el User
+        // Guardar los datos en la entidad UserEntity
         UserEntity savedUser = userRepository.save(newUser);
 
         StudentEntity newStudent = new StudentEntity();
         newStudent.setFirstName(registerStudentDTO.getFirstName());
         newStudent.setLastName(registerStudentDTO.getLastName());
-        newStudent.setEnrollmentCode(registerStudentDTO.getEnrollmentCode());
-
+        newStudent.setEnrollmentCode(generateCode);
         newStudent.setStudentGroup(group);
-
-        // Asignar User al estudiante
         newStudent.setUser(savedUser);
-        // Guardar el estudiante
+
         return studentRepository.save(newStudent);
     }
 
@@ -103,5 +107,36 @@ public class RegisterService {
         return teacherRepository.save(newTeacher);
     }
 
+    public String generateUsername(String firstName, String lastName, String grade, String group){
+        //AÑO y obtención de los primeros datos
+        String year = String.valueOf(LocalDate.now().getYear()).substring(2);
+        String initial = getInitials(firstName, 2) + getInitials(lastName, 2);
+
+
+        String code;
+        int attempts = 0;
+        final int MAX_ATTEMPTS = 10;
+
+        long millis = System.currentTimeMillis();
+        String millisStr = String.valueOf(millis);
+        String millisPart = millisStr.substring(millisStr.length() - 4);
+
+
+        do {
+            code = year + initial + grade + group + millisPart;
+            attempts++;
+            if(attempts >= MAX_ATTEMPTS){
+                throw new RuntimeException("No se pudo generar el usuario, intente de nuevo.");
+            }
+        }while(userRepository.findByUsername(code).isPresent());
+
+        return code;
+    }
+
+    private String getInitials(String text, int length) {
+        if (text == null || text.isBlank()) return "XX"; // fallback si viene vacío
+        String clean = text.replaceAll("[^a-zA-Z]", "").toUpperCase();
+        return clean.substring(0, Math.min(length, clean.length()));
+    }
 
 }

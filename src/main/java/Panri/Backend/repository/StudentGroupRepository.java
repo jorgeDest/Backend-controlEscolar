@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface StudentGroupRepository extends JpaRepository<StudentGroupEntity, Long> {
 
-    Optional<StudentGroupEntity> findByGradeLevelAndName(Integer gradeLevel, String name);
+    Optional<StudentGroupEntity> findByGradeLevelAndName(String gradeLevel, String name);
 
 
 

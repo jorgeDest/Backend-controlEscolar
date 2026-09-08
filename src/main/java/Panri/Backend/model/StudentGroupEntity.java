@@ -24,7 +24,7 @@ public class StudentGroupEntity {
     private String name;
 
     @Column(name = "grade_level")
-    private Integer gradeLevel;
+    private String gradeLevel;
 
     @OneToMany(mappedBy = "studentGroup", cascade = CascadeType.ALL)
     private List<StudentEntity> students = new ArrayList<>();
