@@ -3,7 +3,7 @@ package Panri.Backend.DTOs;
 import lombok.Data;
 
 @Data
-public class LoginUserResponseDto {
+public class LoginUserResponseDTO {
 
     private String username;
     private String rolName;

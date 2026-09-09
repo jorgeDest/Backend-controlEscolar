@@ -37,6 +37,7 @@ public class BasicAuthConfiguration {
                         .requestMatchers("/api/public").permitAll()
                         .requestMatchers("/Auth/login").permitAll()
                         .requestMatchers("/admin/registerStudent").permitAll()
+                        .requestMatchers("/Admin/subject/newSubject").permitAll()
 
                 )
                 .httpBasic(Customizer.withDefaults())
