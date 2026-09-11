@@ -18,7 +18,7 @@ public class ReportCardDetailEntity {
     private Long reportCardDetail;
 
     @Column(name = "score")
-    private double score;
+    private Integer score;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "report_card_id")

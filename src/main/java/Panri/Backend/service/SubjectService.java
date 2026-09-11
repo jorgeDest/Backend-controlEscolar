@@ -12,13 +12,12 @@ public class SubjectService {
     @Autowired
     private SubjectRepository subjectRepository;
 
-    public SubjectEntity createNewSubject(SubjectDTO subjectDTO) {
+    public void createNewSubject(SubjectDTO subjectDTO) {
 
         SubjectEntity subject = new SubjectEntity();
         //Guardar los valores del DTO en la entidad
         subject.setName(subjectDTO.getSubjectName());
         subject.setSubjectCode(subjectDTO.getSubjectCode());
-
-        return subjectRepository.save(subject);
+        subjectRepository.save(subject);
     }
 }

@@ -1,10 +1,9 @@
 package Panri.Backend.repository;
 
-import Panri.Backend.model.SubjectEntity;
+import Panri.Backend.model.AcademicTermEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SubjectRepository extends JpaRepository<SubjectEntity, Long> {
-
+public interface AcademicTermRepository extends JpaRepository<AcademicTermEntity, Long> {
 }
