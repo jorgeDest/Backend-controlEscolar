@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 public class StudentEntity {
-    //atributos correspondientes al modelo
+
     @Id
     @Column(name = "student_Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

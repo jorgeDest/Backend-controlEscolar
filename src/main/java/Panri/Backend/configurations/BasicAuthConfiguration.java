@@ -39,6 +39,7 @@ public class BasicAuthConfiguration {
                         .requestMatchers("/admin/registerStudent").permitAll()
                         .requestMatchers("/Admin/subject/newSubject").permitAll()
                         .requestMatchers("/teacher/reportCardDetail").permitAll()
+                        .requestMatchers("/student/my-califications/{reportId}").permitAll()
 
                 )
                 .httpBasic(Customizer.withDefaults())

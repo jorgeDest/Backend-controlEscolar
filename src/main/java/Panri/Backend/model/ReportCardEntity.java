@@ -18,7 +18,7 @@ public class ReportCardEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "report_cart_id")
+    @Column(name = "report_card_id")
     private Long reportCardId;
 
     //FK del estudiante
