@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 
 @Service
@@ -31,7 +30,8 @@ public class ReportCardService {
                 student.getLastName(),
                 student.getEnrollmentCode(),
                 //es un ternario el cual pregunta si el alumno cuenta con un grupo de lo contrario null
-                student.getStudentGroup() != null ? student.getStudentGroup().getName() : null
+                student.getStudentGroup() != null ? student.getStudentGroup().getName() : null,
+                student.getStudentGroup() != null ? student.getStudentGroup().getGradeLevel() : null
         );
 
         // 3. Transformar la lista de entidades detalle a lista de DTOs detalle

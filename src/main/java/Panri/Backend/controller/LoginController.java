@@ -18,13 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
-@RequestMapping("/Auth")
+@RequestMapping("/api/auth")
 public class LoginController {
 
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired private UserDetailsService userDetailsService;
+    @Autowired
+    private UserDetailsService userDetailsService;
 
     @Autowired
     private JwtService jwtService;

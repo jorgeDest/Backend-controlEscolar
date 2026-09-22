@@ -10,6 +10,7 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,6 +23,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import javax.crypto.spec.SecretKeySpec;
 
 @Configuration
+@EnableWebSecurity
 public class BasicAuthConfiguration {
 
     @Autowired
@@ -34,12 +36,14 @@ public class BasicAuthConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authz -> authz
-                        .requestMatchers("/api/public").permitAll()
-                        .requestMatchers("/Auth/login").permitAll()
-                        .requestMatchers("/admin/registerStudent").permitAll()
-                        .requestMatchers("/Admin/subject/newSubject").permitAll()
-                        .requestMatchers("/teacher/reportCardDetail").permitAll()
-                        .requestMatchers("/student/my-califications/{reportId}").permitAll()
+                        .requestMatchers("/api/public/**").permitAll()
+                        .requestMatchers("/api/auth/login").permitAll()
+                        .requestMatchers("/api/admin/registerStudent").permitAll()
+                        .requestMatchers("/api/admin/registerTeacher").permitAll()
+                        .requestMatchers("/api/admin/subject/newSubject").permitAll()
+                        .requestMatchers("/api/teacher/reportCardDetail").permitAll()
+                        .requestMatchers("/api/student/my-califications/{reportId}").permitAll()
+                        .anyRequest().authenticated()
 
                 )
                 .httpBasic(Customizer.withDefaults())

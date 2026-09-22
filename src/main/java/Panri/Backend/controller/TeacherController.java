@@ -21,7 +21,7 @@ public class TeacherController {
     @Autowired
     private ReportCardDetailService reportCardDetailService;
 
-    //Emitir el reporCardDetail
+    //Emitir la boleta para el alumno
     @PostMapping("/reportCardDetail")
     public ResponseEntity<ResponseCardDetailDTO> generateReportCardDetail(@RequestBody @Valid ReportCardDetailDTO cardDetailDTO) {
 

@@ -17,7 +17,8 @@ public record ReportCardResponseDTO(
             String firstName,
             String lastName,
             String enrollmentCode,
-            String groupName
+            String groupName,
+            String gradeLevel
     ) {
     }
 
